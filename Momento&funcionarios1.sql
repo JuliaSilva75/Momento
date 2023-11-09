@@ -72,3 +72,34 @@ SET SQL_SAFE_UPDATES = 1;
 SELECT P.pais_name, R.regiao_id, R.regiao_nome
 FROM paises P
 INNER JOIN regiao R ON R.regiao_id = P.regiao_id;
+
+-- Joe Sciarra é filho de quem?
+SELECT D.primeiro_nome,F.funcionario_id
+FROM dependentes D
+JOIN funcionarios F ON F.funcionario_id = D.funcionario_id
+WHERE D.primeiro_nome LIKE "%joe%"
+LIMIT 0, 1000;
+
+-- Jose Manuel possui filhos?
+-- Consulta 1
+select * from funcionarios where primeiro_nome like "%Jose %"
+
+-- Consulta 2
+Select * from dependentes where funcionario_id = 112;
+
+-- Qual região possui mais países?
+SELECT R.regiao_id, R.regiao_nome, COUNT(P.pais_name) AS total_paises
+FROM paises P
+INNER JOIN regiao R ON R.regiao_id = P.regiao_id
+GROUP BY R.regiao_id, R.regiao_nome
+ORDER BY total_paises DESC
+LIMIT 1;
+
+-- Exiba o nome cada funcionário acompanhado de seus dependentes.
+
+SELECT F.primeiro_nome AS nome_funcionario, D.primeiro_nome AS nome_dependente
+FROM funcionarios F
+LEFT JOIN dependentes D ON F.funcionario_id = D.funcionario_id;
+
+--Karen Partners possui um(a) cônjuge?
+select * from dependentes where funcionario_id = 146;
